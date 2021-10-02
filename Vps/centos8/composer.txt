@@ -1,0 +1,7 @@
+dnf install php-cli php-json php-zip wget unzip
+
+#php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+
+curl -sS https://getcomposer.org/installer |php
+
+mv composer.phar /usr/local/bin/composer

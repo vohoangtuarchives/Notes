@@ -1,0 +1,20 @@
+dnf install epel-release -y
+dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm
+dnf module list php
+dnf module reset php -y
+dnf module enable php:remi-8.0 -y
+dnf install php php-fpm -y
+dnf install php  php-cli php-fpm php-mysqlnd php-zip php-devel php-gd php-mcrypt php-mbstring php-curl php-xml php-pear php-bcmath php-json php-opcache php-soap  php-common
+
+#/etc/php-fpm.d/www.conf
+
+	user = apache sửa thành user = nginx
+	group = apache sửa thành group = nginx
+
+	Sau đó thêm vào dòng sau
+
+	listen = /var/run/php-fpm/php-fpm.sock
+
+systemctl start php-fpm && systemctl enable php-fpm
+
+

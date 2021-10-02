@@ -1,0 +1,40 @@
+dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm -y
+dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y
+dnf install http://rpms.remirepo.net/enterprise/8/remi/x86_64/php-fedora-autoloader-1.0.0-5.el8.remi.noarch.rpm -y
+
+dnf --enablerepo=remi install phpMyAdmin -y
+
+
+
+#/etc/nginx/conf.d/phpmyadmin.conf
+
+server {
+  listen 80;
+  listen [::]:80;
+  server_name pma.koding.men;
+  root /usr/share/phpMyAdmin;
+  index index.php index.html index.htm index.nginx-debian.html;
+
+  access_log /var/log/nginx/phpmyadmin_access.log;
+  error_log /var/log/nginx/phpmyadmin_error.log;
+
+  location / {
+    try_files $uri $uri/ /index.php;
+  }
+
+  location ~ ^/(doc|sql|setup)/ {
+    deny all;
+  }
+
+  location ~ \.php$ {
+    fastcgi_pass unix:/var/run/php-fpm/php-fpm.sock;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    include fastcgi_params;
+  }
+
+  location ~ /\.ht {
+    deny all;
+  }
+}
+
+chown -R nginx.nginx /etc/phpMyAdmin/
