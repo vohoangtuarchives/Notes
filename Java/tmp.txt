@@ -1,0 +1,8 @@
+https://dlcdn.apache.org/tomcat/tomcat-10/v10.0.10/bin/apache-tomcat-10.0.10.tar.gz
+
+
+
+systemctl restart tomcat.service
+
+/usr/local/tomcat10
+/usr/share/nginx/html
